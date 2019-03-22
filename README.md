@@ -21,4 +21,4 @@ Liri bot is a node.js program that will access databases for movies, concerts an
 
 ## Got it?
 
-! [thumbs up from Sag] (https://www.ezimba.com/work/190322C/ezimba18211145589900.png)
+! [thumbs up from Sag] (./images/thumbs-up.png)
