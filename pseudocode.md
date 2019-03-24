@@ -16,6 +16,10 @@ File Set Up:
     - Moment
 7. Test if all the files are linked together 
 
+
+link to spotify api keys:
+https://developer.spotify.com/dashboard/applications
+
 Program:
 1. The user will be able to choose between four commands
     - command choice and what song/movie/band they want info from
