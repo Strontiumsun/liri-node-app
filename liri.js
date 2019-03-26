@@ -17,27 +17,31 @@ input = process.argv;
 input.shift();
 input.shift();
 input.shift();
-input.join(" ,");
-console.log(input);
+var rescue = input.join(" ");
+console.log(rescue);
 
-switch (command) {
-    case "concert-this": concert();
-        break;
-    case "spotify-this-song": song(input);
-        break;
-    case "movie-this": movie();
-        break;
-    case "do-what-it-says": what();
-        break;
-    default: console.log("please enter an option");
-        break;
+function bigSwitch(command, rescue) {
+    switch (command) {
+        case "concert-this": concert(rescue);
+            break;
+        case "spotify-this-song": song(rescue);
+            break;
+        case "movie-this": movie(rescue);
+            break;
+        case "do-what-it-says": what(rescue);
+            break;
+        default: console.log("please enter an option");
+            break;
+    }
 }
+bigSwitch(command, rescue)
 
-function concert() {
+
+function concert(rescue) {
     console.log("Selected Concert");
-    axios.get("https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp").then(
+    axios.get("https://rest.bandsintown.com/artists/" + rescue + "/events?app_id=codingbootcamp").then(
         function (response) {
-            // console.log(response);
+            // console.log(response.data);
             for (var i = 0; i < response.data.length; i++) {
                 console.log(response.data[i].venue.name, response.data[i].venue.city, response.data[i].datetime);
             }
@@ -45,22 +49,27 @@ function concert() {
     )
 }
 
-function song() {
+function song(rescue) {
     console.log("Selected Spotify");
     spotify.search({
         type: "track",
-        query: input,
+        query: rescue,
     }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
-        console.log(data.tracks);
+        console.log(data.tracks.items[0].album.name);
+
+        //data.tracks.items[0].album.artists[0].name gives us the artist's name
+        //data.tracks.items[0].name gives us the name of the song
+        //data.tracks.items[0].preview_url give us the url
+        //data.tracks.items[0].album.name gives us the album name
     })
 }
 
-function movie() {
+function movie(rescue) {
     console.log("Selected Movie");
-    axios.get("http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy").then(
+    axios.get("http://www.omdbapi.com/?t=" + rescue + "&y=&plot=short&apikey=trilogy").then(
         function (response) {
             console.log(response.data.Title, response.data.Year,
                 response.data.imdbRating, response.data.Ratings[1].Value,
@@ -80,9 +89,12 @@ function what() {
         if (error) {
             return console.log(error)
         }
-        var data = data.split(", ");
+        var data = data.split(",");
         console.log(data);
-        song(data);
+        var optionRandom = data[0];
+        var inputRandom = data[1];
+        console.log(optionRandom, inputRandom);
+        bigSwitch(optionRandom, inputRandom);
     })
 }
 
