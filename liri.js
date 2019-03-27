@@ -7,11 +7,11 @@ var Spotify = require('node-spotify-api');
 // this one goes later
 var spotify = new Spotify(keys.spotify);
 var moment = require('moment');
-moment().format("MM/DD/YYYY");
+moment().format();
 
 var command = process.argv[2];
 
-// I put in this code so that the program could accept movies with more than one-word names
+// I put in this code so that the program could accept movies, etc. with more than one-word names
 var input = "";
 input = process.argv;
 input.shift();
@@ -41,9 +41,11 @@ function concert(rescue) {
     console.log("Selected Concert");
     axios.get("https://rest.bandsintown.com/artists/" + rescue + "/events?app_id=codingbootcamp").then(
         function (response) {
-            // console.log(response.data);
             for (var i = 0; i < response.data.length; i++) {
-                console.log(response.data[i].venue.name, response.data[i].venue.city, response.data[i].datetime);
+                var captureDate = response.data[i].datetime;
+                var dateConvert = moment(captureDate).format("MM/DD/YYYY");
+                console.log("Venue: " + response.data[i].venue.name + "\nCity: " + response.data[i].venue.city + ", " + response.data[i].venue.country + "\nDate: " + dateConvert);
+                console.log("---------------");
             }
         }
     )
@@ -51,6 +53,9 @@ function concert(rescue) {
 
 function song(rescue) {
     console.log("Selected Spotify");
+    if (!rescue) {
+        rescue = "The Sign Ace of Base";
+    }
     spotify.search({
         type: "track",
         query: rescue,
@@ -58,8 +63,14 @@ function song(rescue) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
-        console.log(data.tracks.items[0].album.name);
 
+        for (var i = 0; i < data.tracks.items.length; i++) {
+            console.log(
+                "Artist's Name: " + data.tracks.items[i].album.artists[0].name + "\nSong Name: " + data.tracks.items[i].name
+                + "\nPreview: " + data.tracks.items[i].preview_url + "\nAlbum Name: " + data.tracks.items[i].album.name
+            );
+            console.log("---------------");
+        }
         //data.tracks.items[0].album.artists[0].name gives us the artist's name
         //data.tracks.items[0].name gives us the name of the song
         //data.tracks.items[0].preview_url give us the url
@@ -69,12 +80,16 @@ function song(rescue) {
 
 function movie(rescue) {
     console.log("Selected Movie");
+    if (!rescue) {
+        rescue = "Mr. Nobody"
+    }
     axios.get("http://www.omdbapi.com/?t=" + rescue + "&y=&plot=short&apikey=trilogy").then(
         function (response) {
-            console.log(response.data.Title, response.data.Year,
-                response.data.imdbRating, response.data.Ratings[1].Value,
-                response.data.Country, response.data.Language, response.data.Plot,
-                response.data.Actors);
+            console.log("---------------");
+            console.log("Title: " + response.data.Title + "\nYear: " + response.data.Year + "\nIMDb Rating: " + response.data.imdbRating +
+                "\nRotten Tomatoes Rating: " + response.data.Ratings[1].Value + "\nCountry: " + response.data.Country +
+                "\nLanguage: " + response.data.Language + "\nPlot: " + response.data.Plot + "\nActors: " + response.data.Actors);
+            console.log("---------------");
             // I used this code to help determine where the Rotten Tomatoes rating was.
             // for (var i = 0; i < response.data.Ratings.length; i++) {
             //     console.log(response.data.Ratings[i]);
