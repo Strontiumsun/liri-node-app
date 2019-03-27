@@ -9,6 +9,12 @@ var spotify = new Spotify(keys.spotify);
 var moment = require('moment');
 moment().format();
 
+console.log(
+    "Welcome to liri bot! \nSearch for movies with <movie-this> \nSearch for concerts with <concert-this>" +
+    "\nSearch for songs with <spotify-this-song> \nAfter writing one of the search options, include the name of what you wish to search for" +
+    "\nDon't know what to search? try the command <do-what-it-says>!"
+)
+
 var command = process.argv[2];
 
 // I put in this code so that the program could accept movies, etc. with more than one-word names
@@ -19,6 +25,8 @@ input.shift();
 input.shift();
 var rescue = input.join(" ");
 console.log(rescue);
+
+
 
 function bigSwitch(command, rescue) {
     switch (command) {
@@ -41,6 +49,7 @@ function concert(rescue) {
     console.log("Selected Concert");
     axios.get("https://rest.bandsintown.com/artists/" + rescue + "/events?app_id=codingbootcamp").then(
         function (response) {
+            console.log("---------------");
             for (var i = 0; i < response.data.length; i++) {
                 var captureDate = response.data[i].datetime;
                 var dateConvert = moment(captureDate).format("MM/DD/YYYY");
@@ -63,7 +72,7 @@ function song(rescue) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
-
+        console.log("---------------");
         for (var i = 0; i < data.tracks.items.length; i++) {
             console.log(
                 "Artist's Name: " + data.tracks.items[i].album.artists[0].name + "\nSong Name: " + data.tracks.items[i].name
@@ -105,10 +114,10 @@ function what() {
             return console.log(error)
         }
         var data = data.split(",");
-        console.log(data);
+        // console.log(data);
         var optionRandom = data[0];
         var inputRandom = data[1];
-        console.log(optionRandom, inputRandom);
+        // console.log(optionRandom, inputRandom);
         bigSwitch(optionRandom, inputRandom);
     })
 }
