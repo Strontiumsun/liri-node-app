@@ -15,19 +15,19 @@ For a reminder of what it does, run the program in node and press enter.
 ## How to use
 
 
-* To search for a movie, input movie-this <"name of movie"> followed by the movie you want to search for. Don't be afraid to search for a movie with a long title! 
+* To search for a movie, input **movie-this** followed by the movie you want to search for. Don't be afraid to search for a movie with a long title! 
 ![a screengrab of a movie search](https://github.com/Strontiumsun/liri-node-app/blob/master/images/movie-display.PNG "Movie")
 
 
-* To search for a song on spotify, input spotify-this-song <"name of song"> followed by the name of the song you want to search for. You'll see a bunch of songs, so look towards the top of the list for the song you are *probably* looking for. If you'd like you can also include the artist's name to narrow the search.
+* To search for a song on spotify, input **spotify-this-song** followed by the name of the song you want to search for. You'll see a bunch of songs, so look towards the top of the list for the song you are *probably* looking for. If you'd like you can also include the artist's name to narrow the search.
 ![a screengrab of a spotify search](https://github.com/Strontiumsun/liri-node-app/blob/master/images/spotify-display.PNG "Spotify")
 
 
-* To search for a band or artist's concert schedule, input concert-this <"name of movie"> followed by the artist's name. If nothing appears but you get no errors, it likely means the artist has no tour dates currently scheduled.
+* To search for a band or artist's concert schedule, input **concert-this** followed by the artist's name. If nothing appears but you get no errors, it likely means the artist has no tour dates currently scheduled.
 ![a screengrab of a concert search](https://github.com/Strontiumsun/liri-node-app/blob/master/images/concert-display.PNG "Concert")
 
 
-* If you don't know what you want to search for, you can input do-what-it-says
+* If you don't know what you want to search for, you can input **do-what-it-says**
 ![a screengrab of the random function](https://github.com/Strontiumsun/liri-node-app/blob/master/images/random-display.PNG "Random")
 
 
